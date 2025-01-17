@@ -48,11 +48,15 @@ function Table() {
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] = useState([]);
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "https://interactive-data-table-application-liart.vercel.app/data.csv"
+      : "/data.csv";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/data.csv");
+        const response = await fetch(url);
         const csvText = await response.text();
         Papa.parse(csvText, {
           header: true,
@@ -126,7 +130,11 @@ function Table() {
     <div className="min-h-screen relative flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-500">
       <div className="absolute -left-28 md:left-0 py-5 px-5 bg-white shadow-md h-[80%] w-[80%] translate-x-36 rounded-2xl flex gap-5 flex-col justify-center items-center">
         {/* Search Input */}
-        <div className={`${pending?"hidden":""} w-full flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center`}>
+        <div
+          className={`${
+            pending ? "hidden" : ""
+          } w-full flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center`}
+        >
           <input
             type="text"
             placeholder="Search by Domain Name"
