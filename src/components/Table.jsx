@@ -48,15 +48,11 @@ function Table() {
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] = useState([]);
-  const url =
-    process.env.NODE_ENV === "production"
-      ? "https://interactive-data-table-application-liart.vercel.app/data.csv"
-      : "/data.csv";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch("/data.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
           header: true,
